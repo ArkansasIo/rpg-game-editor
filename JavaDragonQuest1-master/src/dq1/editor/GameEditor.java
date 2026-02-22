@@ -6,6 +6,71 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 public class GameEditor extends JFrame {
+
+    public GameEditor() {
+        setTitle("Dragon Quest 1 Game Editor");
+        setSize(900, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu fileMenu = new JMenu("File");
+        fileMenu.add(new JMenuItem("Open Project"));
+        fileMenu.add(new JMenuItem("Save Project"));
+        fileMenu.add(new JMenuItem("Export"));
+        fileMenu.addSeparator();
+        fileMenu.add(new JMenuItem("Exit"));
+        menuBar.add(fileMenu);
+
+        JMenu editMenu = new JMenu("Edit");
+        editMenu.add(new JMenuItem("Undo"));
+        editMenu.add(new JMenuItem("Redo"));
+        editMenu.addSeparator();
+        editMenu.add(new JMenuItem("Game Logic"));
+        editMenu.add(new JMenuItem("Audio/Sound"));
+        editMenu.add(new JMenuItem("Graphics (PNG)"));
+        menuBar.add(editMenu);
+
+        JMenu rpgMenu = new JMenu("RPG Tools");
+        JMenuItem enemyEditorItem = new JMenuItem("Enemy Editor");
+        enemyEditorItem.addActionListener(e -> showEnemyEditor());
+        rpgMenu.add(enemyEditorItem);
+        JMenuItem monsterEditorItem = new JMenuItem("Monster Editor");
+        monsterEditorItem.addActionListener(e -> showMonsterEditor());
+        rpgMenu.add(monsterEditorItem);
+        JMenuItem npcEditorItem = new JMenuItem("NPC Editor");
+        npcEditorItem.addActionListener(e -> showNPCEditor());
+        rpgMenu.add(npcEditorItem);
+        JMenuItem characterEditorItem = new JMenuItem("Character Editor");
+        characterEditorItem.addActionListener(e -> showCharacterEditor());
+        rpgMenu.add(characterEditorItem);
+        JMenuItem weaponEditorItem = new JMenuItem("Weapon Editor");
+        weaponEditorItem.addActionListener(e -> showWeaponEditor());
+        rpgMenu.add(weaponEditorItem);
+        JMenuItem armorEditorItem = new JMenuItem("Armor Editor");
+        armorEditorItem.addActionListener(e -> showArmorEditor());
+        rpgMenu.add(armorEditorItem);
+        JMenuItem itemEditorItem = new JMenuItem("Item Editor");
+        itemEditorItem.addActionListener(e -> showItemEditor());
+        rpgMenu.add(itemEditorItem);
+        JMenuItem zoneEditorItem = new JMenuItem("Zone Editor");
+        zoneEditorItem.addActionListener(e -> showZoneEditor());
+        rpgMenu.add(zoneEditorItem);
+        JMenuItem subZoneEditorItem = new JMenuItem("Sub-Zone Editor");
+        subZoneEditorItem.addActionListener(e -> showSubZoneEditor());
+        rpgMenu.add(subZoneEditorItem);
+        JMenuItem mapEditorItem = new JMenuItem("Map Editor");
+        mapEditorItem.addActionListener(e -> showMapEditor());
+        rpgMenu.add(mapEditorItem);
+        JMenuItem scriptEditorItem = new JMenuItem("Script Editor");
+        scriptEditorItem.addActionListener(e -> showScriptEditor());
+        rpgMenu.add(scriptEditorItem);
+        rpgMenu.add(new JMenuItem("Event Editor"));
+        rpgMenu.add(new JMenuItem("Player Editor"));
+        menuBar.add(rpgMenu);
+
         // Data Tools menu
         JMenu dataMenu = new JMenu("Data Tools");
         JMenuItem sqlEditorItem = new JMenuItem("SQL Editor");
@@ -15,223 +80,62 @@ public class GameEditor extends JFrame {
         excelEditorItem.addActionListener(e -> showExcelEditor());
         dataMenu.add(excelEditorItem);
         menuBar.add(dataMenu);
-        // SQL Editor dialog
-        private void showSQLEditor() {
-            JDialog dialog = new JDialog((Frame)this, "SQL Editor", true);
-            dialog.setSize(600, 400);
-            dialog.setLocationRelativeTo(this);
-            JPanel panel = new JPanel(new BorderLayout());
-            panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.add(new JLabel("Execute SQL queries and manage RPG data tables."), BorderLayout.NORTH);
-            JTextArea sqlArea = new JTextArea(10, 50);
-            sqlArea.setText("SELECT * FROM monsters;\nUPDATE items SET value=100 WHERE name='Potion';\n");
-            panel.add(new JScrollPane(sqlArea), BorderLayout.CENTER);
-            JButton execButton = new JButton("Execute");
-            panel.add(execButton, BorderLayout.SOUTH);
-            dialog.setContentPane(panel);
-            dialog.setVisible(true);
-        }
 
-        // Excel Editor dialog
-        private void showExcelEditor() {
-            JDialog dialog = new JDialog((Frame)this, "Excel Editor", true);
-            dialog.setSize(600, 400);
-            dialog.setLocationRelativeTo(this);
-            JPanel panel = new JPanel(new BorderLayout());
-            panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            panel.add(new JLabel("Edit RPG data in spreadsheet format."), BorderLayout.NORTH);
-            JTable excelTable = new JTable(
-                new Object[][] {
-                    {"Name", "Type", "Value"},
-                    {"Potion", "Item", 50},
-                    {"Sword", "Weapon", 200},
-                    {"Dragon", "Monster", 1000}
-                },
-                new Object[] {"Name", "Type", "Value"}
-            );
-            panel.add(new JScrollPane(excelTable), BorderLayout.CENTER);
-            JButton saveButton = new JButton("Save Spreadsheet");
-            panel.add(saveButton, BorderLayout.SOUTH);
-            dialog.setContentPane(panel);
-            dialog.setVisible(true);
-        }
-    public GameEditor() {
-        setTitle("Dragon Quest 1 Game Editor");
-        setSize(900, 600);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        import java.awt.*;
-        import javax.swing.*;
-        import javax.swing.tree.DefaultMutableTreeNode;
-            setLayout(new BorderLayout());
-        public class GameEditor extends JFrame {
-            public GameEditor() {
-                setTitle("Dragon Quest 1 Game Editor");
-                setSize(900, 600);
-                setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                setLocationRelativeTo(null);
-                setLayout(new BorderLayout());
+        // IO Menu
+        JMenu ioMenu = new JMenu("IO Tools");
+        ioMenu.add(new JMenuItem("Import Data"));
+        ioMenu.add(new JMenuItem("Export Data"));
+        ioMenu.add(new JMenuItem("Batch Tools"));
 
-                JMenuBar menuBar = new JMenuBar();
+        // Command Menu
+        JMenu commandMenu = new JMenu("Command");
+        commandMenu.add(new JMenuItem("Run Game"));
+        commandMenu.add(new JMenuItem("Build Project"));
+        commandMenu.add(new JMenuItem("Test Game"));
 
-                JMenu fileMenu = new JMenu("File");
-                fileMenu.add(new JMenuItem("Open Project"));
-                fileMenu.add(new JMenuItem("Save Project"));
-                fileMenu.add(new JMenuItem("Export"));
-                fileMenu.add(new JMenuItem("Import"));
-                fileMenu.addSeparator();
-                fileMenu.add(new JMenuItem("Exit"));
-                menuBar.add(fileMenu);
+        // Widget Menu
+        JMenu widgetMenu = new JMenu("Widgets");
+        widgetMenu.add(new JMenuItem("Tile Picker"));
+        // ...existing code for other UI setup...
+    }
 
-                JMenu editMenu = new JMenu("Edit");
-                editMenu.add(new JMenuItem("Undo"));
-                editMenu.add(new JMenuItem("Redo"));
-                editMenu.addSeparator();
-                editMenu.add(new JMenuItem("Game Logic"));
-                editMenu.add(new JMenuItem("Audio/Sound"));
-                editMenu.add(new JMenuItem("Graphics (PNG)"));
-                menuBar.add(editMenu);
+    // SQL Editor dialog
+            setJMenuBar(menuBar);
+        
+            JPanel mainPanel = new JPanel(new GridLayout(1, 3));
+            mainPanel.add(createFilePanel());
+            mainPanel.add(createLogicPanel());
+            mainPanel.add(createGraphicsPanel());
+            add(mainPanel, BorderLayout.CENTER);
+        dialog.setContentPane(panel);
+        dialog.setVisible(true);
+    }
 
-                JMenu rpgMenu = new JMenu("RPG Tools");
-                JMenuItem enemyEditorItem = new JMenuItem("Enemy Editor");
-                enemyEditorItem.addActionListener(e -> showEnemyEditor());
-                rpgMenu.add(enemyEditorItem);
-                JMenuItem monsterEditorItem = new JMenuItem("Monster Editor");
-                monsterEditorItem.addActionListener(e -> showMonsterEditor());
-                rpgMenu.add(monsterEditorItem);
-                JMenuItem npcEditorItem = new JMenuItem("NPC Editor");
-                npcEditorItem.addActionListener(e -> showNPCEditor());
-                rpgMenu.add(npcEditorItem);
-                JMenuItem characterEditorItem = new JMenuItem("Character Editor");
-                characterEditorItem.addActionListener(e -> showCharacterEditor());
-                rpgMenu.add(characterEditorItem);
-                JMenuItem weaponEditorItem = new JMenuItem("Weapon Editor");
-                weaponEditorItem.addActionListener(e -> showWeaponEditor());
-                rpgMenu.add(weaponEditorItem);
-                JMenuItem armorEditorItem = new JMenuItem("Armor Editor");
-                armorEditorItem.addActionListener(e -> showArmorEditor());
-                rpgMenu.add(armorEditorItem);
-                JMenuItem itemEditorItem = new JMenuItem("Item Editor");
-                itemEditorItem.addActionListener(e -> showItemEditor());
-                rpgMenu.add(itemEditorItem);
-                JMenuItem zoneEditorItem = new JMenuItem("Zone Editor");
-                zoneEditorItem.addActionListener(e -> showZoneEditor());
-                rpgMenu.add(zoneEditorItem);
-                JMenuItem subZoneEditorItem = new JMenuItem("Sub-Zone Editor");
-                subZoneEditorItem.addActionListener(e -> showSubZoneEditor());
-                rpgMenu.add(subZoneEditorItem);
-                JMenuItem mapEditorItem = new JMenuItem("Map Editor");
-                mapEditorItem.addActionListener(e -> showMapEditor());
-                rpgMenu.add(mapEditorItem);
-                JMenuItem scriptEditorItem = new JMenuItem("Script Editor");
-                scriptEditorItem.addActionListener(e -> showScriptEditor());
-                rpgMenu.add(scriptEditorItem);
-                rpgMenu.add(new JMenuItem("Event Editor"));
-                rpgMenu.add(new JMenuItem("Player Editor"));
-                menuBar.add(rpgMenu);
-    // Monster Editor dialog
-    private void showMonsterEditor() {
-        JDialog dialog = new JDialog((Frame)this, "Monster Editor", true);
-        dialog.setSize(400, 300);
+    // Excel Editor dialog
+    private void showExcelEditor() {
+        JDialog dialog = new JDialog((Frame)this, "Excel Editor", true);
+        dialog.setSize(600, 400);
         dialog.setLocationRelativeTo(this);
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.add(new JLabel("Edit monster properties here."), BorderLayout.NORTH);
-        JTextArea monsterArea = new JTextArea(10, 30);
-        monsterArea.setText("Name: \nHP: \nAttack: \nDefense: \nType: \nSpecial: \nSprite: \n");
-        panel.add(new JScrollPane(monsterArea), BorderLayout.CENTER);
-        JButton saveButton = new JButton("Save");
+        panel.add(new JLabel("Edit RPG data in spreadsheet format."), BorderLayout.NORTH);
+        JTable excelTable = new JTable(
+            new Object[][] {
+                {"Name", "Type", "Value"},
+                {"Potion", "Item", 50},
+                {"Sword", "Weapon", 200},
+                {"Dragon", "Monster", 1000}
+            },
+            new Object[] {"Name", "Type", "Value"}
+        );
+        panel.add(new JScrollPane(excelTable), BorderLayout.CENTER);
+        JButton saveButton = new JButton("Save Spreadsheet");
         panel.add(saveButton, BorderLayout.SOUTH);
         dialog.setContentPane(panel);
         dialog.setVisible(true);
     }
 
-    // NPC Editor dialog
-    private void showNPCEditor() {
-        JDialog dialog = new JDialog((Frame)this, "NPC Editor", true);
-        dialog.setSize(400, 300);
-        dialog.setLocationRelativeTo(this);
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.add(new JLabel("Edit NPC properties here."), BorderLayout.NORTH);
-        JTextArea npcArea = new JTextArea(10, 30);
-        npcArea.setText("Name: \nRole: \nDialogue: \nLocation: \nSprite: \n");
-        panel.add(new JScrollPane(npcArea), BorderLayout.CENTER);
-        JButton saveButton = new JButton("Save");
-        panel.add(saveButton, BorderLayout.SOUTH);
-        dialog.setContentPane(panel);
-        dialog.setVisible(true);
-    }
-
-    // Character Editor dialog
-    private void showCharacterEditor() {
-        JDialog dialog = new JDialog((Frame)this, "Character Editor", true);
-        dialog.setSize(400, 300);
-        dialog.setLocationRelativeTo(this);
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.add(new JLabel("Edit character properties here."), BorderLayout.NORTH);
-        JTextArea charArea = new JTextArea(10, 30);
-        charArea.setText("Name: \nClass: \nLevel: \nHP: \nMP: \nStats: \nSprite: \n");
-        panel.add(new JScrollPane(charArea), BorderLayout.CENTER);
-        JButton saveButton = new JButton("Save");
-        panel.add(saveButton, BorderLayout.SOUTH);
-        dialog.setContentPane(panel);
-        dialog.setVisible(true);
-    }
-
-    // Weapon Editor dialog
-    private void showWeaponEditor() {
-        JDialog dialog = new JDialog((Frame)this, "Weapon Editor", true);
-        dialog.setSize(400, 300);
-        dialog.setLocationRelativeTo(this);
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.add(new JLabel("Edit weapon properties here."), BorderLayout.NORTH);
-        JTextArea weaponArea = new JTextArea(10, 30);
-        weaponArea.setText("Name: \nType: \nAttack: \nSpecial: \nSprite: \n");
-        panel.add(new JScrollPane(weaponArea), BorderLayout.CENTER);
-        JButton saveButton = new JButton("Save");
-        panel.add(saveButton, BorderLayout.SOUTH);
-        dialog.setContentPane(panel);
-        dialog.setVisible(true);
-    }
-
-    // Armor Editor dialog
-    private void showArmorEditor() {
-        JDialog dialog = new JDialog((Frame)this, "Armor Editor", true);
-        dialog.setSize(400, 300);
-        dialog.setLocationRelativeTo(this);
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.add(new JLabel("Edit armor properties here."), BorderLayout.NORTH);
-        JTextArea armorArea = new JTextArea(10, 30);
-        armorArea.setText("Name: \nType: \nDefense: \nSpecial: \nSprite: \n");
-        panel.add(new JScrollPane(armorArea), BorderLayout.CENTER);
-        JButton saveButton = new JButton("Save");
-        panel.add(saveButton, BorderLayout.SOUTH);
-        dialog.setContentPane(panel);
-        dialog.setVisible(true);
-    }
-
-    // Zone Editor dialog
-    private void showZoneEditor() {
-        JDialog dialog = new JDialog((Frame)this, "Zone Editor", true);
-        dialog.setSize(400, 300);
-        dialog.setLocationRelativeTo(this);
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        panel.add(new JLabel("Edit zone properties here."), BorderLayout.NORTH);
-        JTextArea zoneArea = new JTextArea(10, 30);
-        zoneArea.setText("Zone Name: \nType: \nDifficulty: \nMap: \n");
-        panel.add(new JScrollPane(zoneArea), BorderLayout.CENTER);
-        JButton saveButton = new JButton("Save");
-        panel.add(saveButton, BorderLayout.SOUTH);
-        dialog.setContentPane(panel);
-        dialog.setVisible(true);
-    }
-
-    // Sub-Zone Editor dialog
+    // ...existing code for other dialogs and editor features...
     private void showSubZoneEditor() {
         JDialog dialog = new JDialog((Frame)this, "Sub-Zone Editor", true);
         dialog.setSize(400, 300);
@@ -248,24 +152,6 @@ public class GameEditor extends JFrame {
         dialog.setVisible(true);
     }
 
-                JMenu ioMenu = new JMenu("Input/Output");
-                ioMenu.add(new JMenuItem("Import Data"));
-                ioMenu.add(new JMenuItem("Export Data"));
-                ioMenu.add(new JMenuItem("Batch Tools"));
-                menuBar.add(ioMenu);
-
-                JMenu commandMenu = new JMenu("Commands");
-                commandMenu.add(new JMenuItem("Run Game"));
-                commandMenu.add(new JMenuItem("Build Project"));
-                commandMenu.add(new JMenuItem("Test Game"));
-                menuBar.add(commandMenu);
-
-                JMenu widgetMenu = new JMenu("Widgets");
-                widgetMenu.add(new JMenuItem("Tile Picker"));
-                widgetMenu.add(new JMenuItem("Color Palette"));
-                widgetMenu.add(new JMenuItem("Sound Mixer"));
-                widgetMenu.add(new JMenuItem("Sprite Viewer"));
-                menuBar.add(widgetMenu);
 
                 JMenu pluginMenu = new JMenu("Plugins");
                 pluginMenu.add(new JMenuItem("Load Plugin"));
