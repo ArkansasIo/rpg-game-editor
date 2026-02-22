@@ -13,9 +13,7 @@ import java.util.logging.Logger;
 public class Debug {
 
     public static void update() {
-        if (1 == 1) {
-            return;
-        }
+        // Debug logic here (removed dead code)
         
         
         if (Input.isKeyJustPressed(KeyEvent.VK_B)) {

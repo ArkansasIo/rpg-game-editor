@@ -1,0 +1,121 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+package dq1.editor;
+
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.GridLayout;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTree;
+import javax.swing.SwingUtilities;
+import javax.swing.tree.DefaultMutableTreeNode;
+
+public class GameEditor extends JFrame {
+   public GameEditor() {
+      this.setTitle("Dragon Quest 1 Game Editor");
+      this.setSize(900, 600);
+      this.setDefaultCloseOperation(3);
+      this.setLocationRelativeTo((Component)null);
+      this.setLayout(new BorderLayout());
+      JMenuBar var1 = new JMenuBar();
+      JMenu var2 = new JMenu("File");
+      var2.add(new JMenuItem("Open Project"));
+      var2.add(new JMenuItem("Save Project"));
+      var2.add(new JMenuItem("Exit"));
+      var1.add(var2);
+      JMenu var3 = new JMenu("Edit");
+      var3.add(new JMenuItem("Game Logic"));
+      var3.add(new JMenuItem("Audio/Sound"));
+      var3.add(new JMenuItem("Graphics (PNG)"));
+      var1.add(var3);
+      JMenu var4 = new JMenu("Plugins");
+      var4.add(new JMenuItem("Load Plugin"));
+      var4.add(new JMenuItem("Manage Plugins"));
+      var1.add(var4);
+      this.setJMenuBar(var1);
+      JPanel var5 = new JPanel(new GridLayout(1, 3));
+      var5.add(this.createFilePanel());
+      var5.add(this.createLogicPanel());
+      var5.add(this.createGraphicsPanel());
+      this.add(var5, "Center");
+   }
+
+   private JPanel createFilePanel() {
+      JPanel var1 = new JPanel(new BorderLayout());
+      var1.setBorder(BorderFactory.createTitledBorder("Files & Folders"));
+      DefaultMutableTreeNode var2 = new DefaultMutableTreeNode("Project Root");
+      JTree var3 = new JTree(var2);
+      JScrollPane var4 = new JScrollPane(var3);
+      var1.add(var4, "Center");
+      JPanel var5 = new JPanel();
+      JButton var6 = new JButton("Add File");
+      JButton var7 = new JButton("Remove File");
+      JButton var8 = new JButton("Edit File");
+      var5.add(var6);
+      var5.add(var7);
+      var5.add(var8);
+      var1.add(var5, "South");
+      return var1;
+   }
+
+   private JPanel createLogicPanel() {
+      JPanel var1 = new JPanel(new BorderLayout());
+      var1.setBorder(BorderFactory.createTitledBorder("Game Logic"));
+      JComboBox var2 = new JComboBox(new String[]{"Animation.java", "Audio.java", "Battle.java", "BitmapFont.java", "Credits.java", "Debug.java", "Dialog.java", "Enemy.java", "Event.java", "EventFactory.java", "Game.java", "Input.java", "Inventory.java", "Item.java", "Magic.java", "OLPresents.java", "Player.java", "PlayerLevel.java", "Resource.java", "Script.java", "Settings.java", "Shop.java", "Spell.java", "Tile.java", "TileMap.java", "Util.java", "View.java"});
+      var1.add(var2, "North");
+      JTextArea var3 = new JTextArea(20, 30);
+      JScrollPane var4 = new JScrollPane(var3);
+      var1.add(var4, "Center");
+      JPanel var5 = new JPanel();
+      JButton var6 = new JButton("Load");
+      JButton var7 = new JButton("Save");
+      var5.add(var6);
+      var5.add(var7);
+      var1.add(var5, "South");
+      return var1;
+   }
+
+   private JPanel createGraphicsPanel() {
+      JPanel var1 = new JPanel(new GridLayout(2, 1));
+      var1.setBorder(BorderFactory.createTitledBorder("Graphics & Audio"));
+      JPanel var2 = new JPanel(new BorderLayout());
+      var2.setBorder(BorderFactory.createTitledBorder("Audio/Sound Editor"));
+      JComboBox var3 = new JComboBox(new String[]{"musics.inf", "audio1.wav", "audio2.wav", "audio3.mp3"});
+      var2.add(var3, "North");
+      JPanel var4 = new JPanel();
+      JButton var5 = new JButton("Play");
+      JButton var6 = new JButton("Stop");
+      var4.add(var5);
+      var4.add(var6);
+      var2.add(var4, "South");
+      JPanel var7 = new JPanel(new BorderLayout());
+      var7.setBorder(BorderFactory.createTitledBorder("Graphics (PNG) Editor"));
+      JComboBox var8 = new JComboBox(new String[]{"tileset.png", "sprite1.png", "sprite2.png"});
+      var7.add(var8, "North");
+      JLabel var9 = new JLabel();
+      var9.setHorizontalAlignment(0);
+      var9.setVerticalAlignment(0);
+      var9.setText("PNG Preview Area");
+      var7.add(var9, "Center");
+      JButton var10 = new JButton("Edit PNG");
+      var7.add(var10, "South");
+      var1.add(var2);
+      var1.add(var7);
+      return var1;
+   }
+
+   public static void main(String[] var0) {
+      SwingUtilities.invokeLater(() -> {
+         (new GameEditor()).setVisible(true);
+      });
+   }
+}

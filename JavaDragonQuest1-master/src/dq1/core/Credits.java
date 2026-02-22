@@ -148,13 +148,12 @@ public class Credits {
 "\n";
     
     public static void main(String[] args) throws Exception {
-        BitmapFont font = new BitmapFont();
         BufferedImage result = new BufferedImage(256, 240 * 10, BufferedImage.TYPE_INT_RGB);
         Graphics2D g = (Graphics2D) result.getGraphics();
         String[] lines = msg.split("\n");
         int lineNumber = 0;
         for (String line : lines) {
-            font.drawText(g, line, 3, lineNumber);
+            BitmapFont.drawText(g, line, 3, lineNumber);
             lineNumber++;
         }
         ImageIO.write(result, "png", new File("d:/dq1_credits.png"));
